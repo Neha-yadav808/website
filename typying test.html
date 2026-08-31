@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TypeMaster - Online Typing Test</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* Header */
+        header {
+            height: 70px;
+            background: #111827;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #60a5fa;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #fde047;
+        }
+
+        .hero p {
+            font-size: 19px;
+            margin-bottom: 30px;
+        }
+
+        .start-btn {
+            display: inline-block;
+            padding: 13px 30px;
+            background: white;
+            color: #2563eb;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Main Section */
+        .typing-section {
+            width: 90%;
+            max-width: 1000px;
+            margin: 50px auto;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .stat-box h3 {
+            font-size: 30px;
+            color: #2563eb;
+        }
+
+        .stat-box p {
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        /* Test Card */
+        .test-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .test-card h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .text-display {
+            background: #f3f4f6;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.8;
+            font-size: 18px;
+            margin-bottom: 20px;
+            min-height: 120px;
+        }
+
+        .text-display span.correct {
+            color: #16a34a;
+        }
+
+        .text-display span.incorrect {
+            color: #dc2626;
+            background: #fee2e2;
+        }
+
+        .text-display span.current {
+            border-bottom: 2px solid #2563eb;
+        }
+
+        /* Textarea */
+        textarea {
+            width: 100%;
+            height: 150px;
+            resize: none;
+            padding: 15px;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 17px;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: #2563eb;
+        }
+
+        /* Button */
+        #restart-btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #restart-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* About */
+        .about {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+        }
+
+        .about h2 {
+            margin-bottom: 15px;
+        }
+
+        .about p {
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.7;
+            color: #6b7280;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            background: #111827;
+            color: white;
+            padding: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+
+            header {
+                padding: 0 20px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 35px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .typing-section {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+
+        <div class="logo">
+            ⌨️ TypeMaster
+        </div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#test">Typing Test</a>
+            <a href="#about">About</a>
+        </nav>
+
+    </header>
+
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+
+        <h1>
+            Test Your <span>Typing Speed</span>
+        </h1>
+
+        <p>
+            Improve your typing speed, accuracy and productivity.
+        </p>
+
+        <a href="#test" class="start-btn">
+            Start Test
+        </a>
+
+    </section>
+
+
+    <!-- Typing Test -->
+    <section id="test" class="typing-section">
+
+        <!-- Statistics -->
+        <div class="stats">
+
+            <div class="stat-box">
+                <h3 id="timer">60</h3>
+                <p>Time</p>
+            </div>
+
+            <div class="stat-box">
+                <h3 id="wpm">0</h3>
+                <p>WPM</p>
+            </div>
+
+            <div class="stat-box">
+                <h3 id="accuracy">100%</h3>
+                <p>Accuracy</p>
+            </div>
+
+            <div class="stat-box">
+                <h3 id="errors">0</h3>
+                <p>Errors</p>
+            </div>
+
+        </div>
+
+
+        <!-- Test Card -->
+        <div class="test-card">
+
+            <h2>⌨️ Typing Test</h2>
+
+            <div id="text-display" class="text-display"></div>
+
+           <textarea
+    id="typing-input"
+    placeholder="Start typing here..."
+    spellcheck="false">
+</textarea>
+
+
+            <button id="restart-btn">
+                🔄 Restart Test
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- About -->
+    <section class="about" id="about">
+
+        <h2>About TypeMaster</h2>
+
+        <p>
+            TypeMaster is an online typing test platform designed
+            to help users measure and improve their typing speed,
+            accuracy and typing skills.
+        </p>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <p>
+            © 2026 TypeMaster | Online Typing Test
+        </p>
+
+    </footer>
+
+
+    <script>
+
+        // Typing paragraphs
+        const paragraphs = [
+
+            "Practice makes a person perfect. Regular typing practice can help you improve your speed and accuracy. Keep your fingers positioned correctly and focus on the screen while typing.",
+
+            "Technology has changed the way people communicate and work. Learning useful computer skills can help students become more productive and confident in their daily activities.",
+
+            "Typing quickly is a useful skill for students, programmers, writers and professionals. With regular practice, you can increase your typing speed while maintaining excellent accuracy.",
+
+            "The internet provides many opportunities for learning new skills. Online platforms allow students to practice, learn and improve their knowledge from anywhere at any time."
+
+        ];
+
+
+        // HTML Elements
+        const textDisplay = document.getElementById("text-display");
+
+        const typingInput = document.getElementById("typing-input");
+
+        const timerElement = document.getElementById("timer");
+
+        const wpmElement = document.getElementById("wpm");
+
+        const accuracyElement = document.getElementById("accuracy");
+
+        const errorsElement = document.getElementById("errors");
+
+        const restartBtn = document.getElementById("restart-btn");
+
+
+        // Variables
+        let selectedText = "";
+
+        let timeLeft = 60;
+
+        let timer = null;
+
+        let started = false;
+
+        let totalErrors = 0;
+
+
+        // Select random paragraph
+        function selectText() {
+
+            const randomIndex =
+                Math.floor(Math.random() * paragraphs.length);
+
+            selectedText = paragraphs[randomIndex];
+
+            textDisplay.innerHTML = "";
+
+            selectedText.split("").forEach(character => {
+
+                const span = document.createElement("span");
+
+                span.innerText = character;
+
+                textDisplay.appendChild(span);
+
+            });
+
+        }
+
+
+        // Start test
+        function startTest() {
+
+            if (started) return;
+
+            started = true;
+
+            typingInput.disabled = false;
+
+            typingInput.focus();
+
+
+            timer = setInterval(() => {
+
+                timeLeft--;
+
+                timerElement.innerText = timeLeft;
+
+                calculateWPM();
+
+
+                if (timeLeft <= 0) {
+
+                    finishTest();
+
+                }
+
+            }, 1000);
+
+        }
+
+
+        // Calculate WPM
+        function calculateWPM() {
+
+            const typedText = typingInput.value;
+
+
+            const correctCharacters = typedText
+                .split("")
+                .filter((character, index) => {
+
+                    return character === selectedText[index];
+
+                }).length;
+
+
+            const elapsedTime = 60 - timeLeft;
+
+
+            if (elapsedTime > 0) {
+
+                const words = correctCharacters / 5;
+
+                const minutes = elapsedTime / 60;
+
+                const wpm = Math.round(words / minutes);
+
+                wpmElement.innerText = wpm || 0;
+
+            }
+
+        }
+
+
+        // Update typing text
+        function updateText() {
+
+            const typedText = typingInput.value;
+
+            const spans = textDisplay.querySelectorAll("span");
+
+            totalErrors = 0;
+
+
+            spans.forEach((span, index) => {
+
+                const typedCharacter = typedText[index];
+
+                span.classList.remove(
+                    "correct",
+                    "incorrect",
+                    "current"
+                );
+
+
+                // Current character
+                if (typedCharacter == null) {
+
+                    if (index === typedText.length) {
+
+                        span.classList.add("current");
+
+                    }
+
+                }
+
+
+                // Correct character
+                else if (
+                    typedCharacter === selectedText[index]
+                ) {
+
+                    span.classList.add("correct");
+
+                }
+
+
+                // Incorrect character
+                else {
+
+                    span.classList.add("incorrect");
+
+                    totalErrors++;
+
+                }
+
+            });
+
+
+            errorsElement.innerText = totalErrors;
+
+
+            // Accuracy
+            const typedLength = typedText.length;
+
+
+            if (typedLength > 0) {
+
+                const correctCharacters = typedText
+                    .split("")
+                    .filter((char, index) => {
+
+                        return char === selectedText[index];
+
+                    }).length;
+
+
+                const accuracy = Math.round(
+                    (correctCharacters / typedLength) * 100
+                );
+
+
+                accuracyElement.innerText =
+                    accuracy + "%";
+
+            }
+
+            else {
+
+                accuracyElement.innerText = "100%";
+
+            }
+
+
+            calculateWPM();
+
+
+            // Finish when paragraph is complete
+            if (typedText.length >= selectedText.length) {
+
+                finishTest();
+
+            }
+
+        }
+
+
+        // Finish test
+        function finishTest() {
+
+            clearInterval(timer);
+
+            typingInput.disabled = true;
+
+            started = false;
+
+            calculateWPM();
+
+
+            setTimeout(() => {
+
+                alert(
+                    "🎉 Test Finished!\n\n" +
+
+                    "WPM: " +
+                    wpmElement.innerText +
+
+                    "\nAccuracy: " +
+                    accuracyElement.innerText +
+
+                    "\nErrors: " +
+                    errorsElement.innerText
+                );
+
+            }, 200);
+
+        }
+
+
+        // Restart test
+        function restartTest() {
+
+            clearInterval(timer);
+
+            timeLeft = 60;
+
+            started = false;
+
+            totalErrors = 0;
+
+
+            timerElement.innerText = "60";
+
+            wpmElement.innerText = "0";
+
+            accuracyElement.innerText = "100%";
+
+            errorsElement.innerText = "0";
+
+
+            typingInput.value = "";
+
+            typingInput.disabled = true;
+
+
+            selectText();
+
+        }
+
+
+        // Typing event
+        typingInput.addEventListener("input", () => {
+
+            if (!started) {
+
+                startTest();
+
+            }
+
+            updateText();
+
+        });
+
+
+        // Restart button
+        restartBtn.addEventListener(
+            "click",
+            restartTest
+        );
+
+
+        // Load first paragraph
+        selectText();
+
+    </script>
+
+</body>
+</html>
